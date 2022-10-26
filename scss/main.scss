@@ -1,0 +1,523 @@
+@import "./variables";
+@import "./font";
+@import "./reset";
+@import "./animations";
+
+// Mixins
+@mixin phone {
+  @media (max-width: $phone-width) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$phone-width + 1}) and (max-width: #{$desktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+// General Styling
+html,
+body {
+  width: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: $primary;
+  font-family: $ff-body;
+}
+
+h2 {
+  font-size: $fs-secondary-heading;
+  text-align: center;
+}
+
+h3 {
+  font-size: $fs-650;
+}
+
+// Utilities
+
+.container {
+  --max-width: 1110px;
+  --container-padding: 1rem;
+
+  width: min(var(--max-width), 100% - (var(--container-padding) * 2));
+  margin-inline: auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap; /* added line */
+  border: 0;
+}
+
+%flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button-purple {
+  display: inline-flex;
+  cursor: pointer;
+  text-decoration: none;
+  border: 0;
+  padding: 0.8em 1.5em;
+  font-weight: $fw-semi-bold;
+  font-size: $fs-button;
+  line-height: 1;
+  color: $neutral-light;
+  background-color: $accent;
+  box-shadow: 0 0.7em 1em -1em $accent;
+  transition: 0.3s;
+}
+
+.button-purple:hover,
+.button-purple:focus-visible {
+  background-color: $accent-darken;
+}
+
+.socials {
+  display: flex;
+  padding-left: 0;
+
+  .icon {
+    margin-right: 0.6rem;
+    height: 24px;
+    width: 24px;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+      fill: $accent;
+    }
+  }
+}
+
+.no-scroll {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+// Header and Navigation
+header {
+  position: fixed;
+  width: 100vw;
+  background-color: $primary;
+  z-index: 2;
+  border-bottom: 1px solid $neutral;
+}
+
+.nav-wrapper {
+  @extend %flex-center;
+
+  & > a:first-child {
+    height: 64px;
+  }
+
+  .icon {
+    width: 60px;
+    height: 100%;
+    display: flex;
+    padding-block: 1rem;
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+    color: $neutral;
+  }
+
+  li:hover,
+  li:focus-within {
+    background-color: $neutral;
+    a {
+      color: $primary;
+    }
+  }
+
+  .link.active {
+    background-color: $neutral;
+    & > a {
+      color: $primary;
+    }
+  }
+
+  .container {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+  }
+
+  @import "./custombutton";
+
+  @include desktop {
+    .mobile-nav-toggle {
+      display: none;
+    }
+
+    .nav-list {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-block: 0;
+    }
+
+    li {
+      min-height: 4rem;
+      padding-inline: 2rem;
+    }
+
+    .nav-links {
+      line-height: 4rem;
+    }
+  }
+}
+
+@include phone {
+  .primary-navigation {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 80%;
+    max-width: 320px;
+    background-color: $neutral-light;
+    transition: 0.3s ease-in-out;
+    padding: 0 2.5rem;
+    z-index: 1;
+  }
+
+  .nav-list {
+    margin-top: 4rem;
+    padding: 0;
+
+    li {
+      padding: 1rem;
+      border-bottom: 1px solid $neutral;
+    }
+    a {
+      font-size: 1.25rem;
+    }
+  }
+
+  .mobile-nav-toggle {
+    z-index: 2;
+  }
+}
+
+@include tablet {
+  .primary-navigation {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 80%;
+    max-width: 320px;
+    background-color: $neutral-light;
+    transition: 0.3s ease-in-out;
+    padding: 0 2.5rem;
+    z-index: 1;
+  }
+
+  .nav-list {
+    margin-top: 4rem;
+    padding: 0;
+
+    li {
+      padding: 1rem;
+      border-bottom: 1px solid $neutral;
+    }
+    a {
+      font-size: 1.25rem;
+    }
+  }
+
+  .mobile-nav-toggle {
+    z-index: 2;
+  }
+}
+
+.primary-navigation[data-visible] {
+  right: 0;
+}
+
+// Main
+
+main {
+  section:first-child {
+    min-height: 100vh;
+  }
+  section:not(:first-child) {
+    padding-top: 96px;
+  }
+}
+
+// Hero Section
+
+.hero-wrapper {
+  max-width: 700px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
+  h1 {
+    font-size: clamp(3rem, 2.5714rem + 2.1429vw, 4.5rem);
+    line-height: 1;
+    margin-block: 1rem;
+  }
+
+  .custom-text {
+    color: $accent;
+    font-weight: $fw-bold;
+  }
+
+  p:first-child {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  button {
+    margin-block: 2rem;
+  }
+
+  .socials {
+    justify-content: center;
+  }
+
+  .js-scroll {
+    &:nth-child(1) {
+      animation-delay: 100ms;
+    }
+    &:nth-child(2) {
+      animation-delay: 300ms;
+    }
+    &:nth-child(3) {
+      animation-delay: 500ms;
+    }
+    &:nth-child(4) {
+      animation-delay: 700ms;
+    }
+    &:nth-child(5) {
+      animation-delay: 900ms;
+    }
+  }
+}
+
+.scroll {
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  bottom: 20px;
+  transition: 0.3s ease-in-out;
+  margin-inline: auto;
+  opacity: 1;
+  left: 0;
+  right: 0;
+  rotate: 90deg;
+  animation: bounce 0.5s infinite alternate;
+}
+
+@keyframes bounce {
+  from {
+    transform: translatex(0px);
+  }
+  to {
+    transform: translatex(-15px);
+  }
+}
+// Services
+
+.services-wrapper {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2rem;
+  div {
+    max-width: 350px;
+    flex: 1 1 250px;
+    padding: 1.5rem;
+    border: 1px solid $neutral;
+    text-align: center;
+  }
+
+  .icon {
+    width: 100%;
+    height: 120px;
+  }
+
+  h3 {
+    margin: 1rem 0 0.5rem 0;
+  }
+
+  span {
+    display: block;
+  }
+
+  & > div {
+    @include desktop {
+      &:nth-child(1) {
+        animation-delay: 100ms;
+      }
+      &:nth-child(2) {
+        animation-delay: 300ms;
+      }
+      &:nth-child(3) {
+        animation-delay: 500ms;
+      }
+    }
+  }
+}
+
+// Projects
+
+.projects-wrapper {
+  margin-top: 2rem;
+  @include desktop {
+    & > div {
+      position: relative;
+      display: grid;
+      grid-template-columns: 60% 1fr;
+      gap: 3rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.project-info {
+  color: $neutral;
+  margin-bottom: 2rem;
+
+  a {
+    display: flex;
+    align-items: center;
+    color: $accent;
+    font-weight: $fw-bold;
+  }
+
+  .tags {
+    font-size: 0.75rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin-block: 1rem 0.5rem;
+  }
+}
+
+// Contact
+
+.contact-wrapper {
+  border: 1px solid $neutral;
+  padding: 1rem;
+
+  h2 {
+    text-align: left;
+  }
+
+  .email {
+    margin-block: 1rem 2rem;
+    font-weight: $fw-semi-bold;
+    overflow-wrap: break-word;
+
+    &::before {
+      display: inline-block;
+      background-image: url("../assets/email.png");
+      background-size: 25px 25px;
+      height: 25px;
+      width: 25px;
+      content: "";
+      vertical-align: -35%;
+      margin-right: 1rem;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    li {
+      padding-bottom: 2rem;
+    }
+  }
+
+  label {
+    display: block;
+    font-weight: $fw-semi-bold;
+  }
+
+  label:after {
+    content: "*";
+    color: red;
+  }
+  input,
+  textarea {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid $neutral;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: none;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  button {
+    display: block;
+    margin-left: auto;
+  }
+
+  @include desktop {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 7rem;
+  }
+
+  @include desktop {
+    padding: 3rem;
+  }
+}
+
+// Footer
+
+footer {
+  background-color: $neutral;
+  padding-block: 2rem;
+  margin-top: 4rem;
+
+  p {
+    color: $neutral-light;
+    text-align: center;
+  }
+}

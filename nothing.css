@@ -1,0 +1,72 @@
+.projects-wrapper {
+  margin-top: 1rem;
+  display: grid;
+  gap: 1em 0;
+
+  div {
+    padding: 2rem 1rem;
+    border: 1px solid $neutral;
+  }
+
+  @include tablet {
+    gap: 2em 1em;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, 150px);
+    grid-template-areas:
+      "first ."
+      "first second"
+      "third second"
+      "third fourth"
+      ". fourth";
+    div:nth-child(1) {
+      grid-area: first;
+    }
+    div:nth-child(2) {
+      grid-area: second;
+    }
+    div:nth-child(3) {
+      grid-area: third;
+    }
+    div:nth-child(4) {
+      grid-area: fourth;
+    }
+  }
+
+  @include desktop {
+    gap: 2em 1em;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, 140px);
+    grid-template-areas:
+      "first . third ."
+      "first second third fourth"
+      ". second . fourth";
+    div:nth-child(1) {
+      grid-area: first;
+    }
+    div:nth-child(2) {
+      grid-area: second;
+    }
+    div:nth-child(3) {
+      grid-area: third;
+    }
+    div:nth-child(4) {
+      grid-area: fourth;
+    }
+  }
+
+  h4 {
+    margin-block: 1rem 0.5rem;
+  }
+
+  div {
+    a {
+      color: $accent;
+      font-weight: $fw-bold;
+    }
+
+    p {
+      font-size: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
